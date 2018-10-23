@@ -16,4 +16,4 @@ pdfs=$(mds:.md=.pdf)
 pdf: $(pdfs)
 
 release: pdf
-	rsync -avc $(pdfs) ~/B121/intro-DB
+	rsync -avc --delete $(pdfs) ~/B121/intro-DB
