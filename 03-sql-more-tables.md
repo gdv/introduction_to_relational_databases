@@ -195,7 +195,7 @@ Find who has written a book whose ISBN ends with `5`
 ```sql
 SELECT Books.id, ISBN, Authors.id,
        last_name, first_name
-FROM Books, Editions, BooksAuthors
+FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id AND
       isbn LIKE "%5";
@@ -208,7 +208,7 @@ WHERE Books.id = BooksAuthors.book_id AND
 ```sql
 SELECT Books.id, ISBN, Authors.id,
        last_name, first_name
-FROM Books, Editions, BooksAuthors
+FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id AND
       isbn LIKE "%5";
