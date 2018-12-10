@@ -1,4 +1,12 @@
-# SQL on two tables
+---
+ title: SQL in two tables
+ classoption:
+ - aspectratio=169
+ header-includes:
+ -  \setmonofont{Ubuntu Mono}
+ - \hypersetup{colorlinks=true}
+---
+
 
 
 ## Authors table

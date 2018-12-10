@@ -3,7 +3,7 @@ all: pdf #html
 mds=$(wildcard *.md)
 
 %.pdf : %.md
-	pandoc -t beamer --from markdown+grid_tables -V theme:metropolis --listings  -V themeoptions:titleformat=smallcaps --pdf-engine xelatex  $< -o $@
+	pandoc -t beamer --from markdown+grid_tables -V theme:metropolis --listings  -V aspectratio:169 -V themeoptions:titleformat=smallcaps --pdf-engine xelatex  $< -o $@
 	test -d ~/B121/intro-DB/$@ || mkdir -p ~/B121/intro-DB/$@
 	rsync -avc  $@  ~/B121/intro-DB/$@/
 
