@@ -32,11 +32,37 @@ Each *entry* (or cell) contains **a single piece of data**.
 
 How do we handle a book with two authors?
 
+## Books and Authors
+
+
+--------------------------------------------------------------------------------------------------------------------------
+**ISBN**   **title**                                              **Authors**
+---------- -----------------------------------------------------  -----------------------------------------------------
+62112346   Creating relational databases for fun and profit       Lopez Baranda Christina, Jones Hannah, Turay Tandice
+
+84321235   Relational databases for really, really smart people   Novak Stanislaw, Turay Tandice
+
+64567899   My life with relational databases: a memoir            Roy Shanta
+
+87261235   Relational databases: an existential journey           Khatami Paree
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Table: books with multiple authors
+
+
+**Not** a good idea
+
 ## Linked tables
+
+*  One cell, one data
+
+*  One table, one set of similar facts/situations
 
 Two tables can be linked to obtain more information.
 
-Needs an identifier (ID) for the each row
+Needs an identifier (ID) for the each row (**primary key**)
 
 ##  Books
 
@@ -88,6 +114,17 @@ Table: books
        1          5 
        4          8 
 
+Bridging table
+
+##  Tables, relationships, and IDs
+
+*  intermediate table:  *relation* or *join* or *bridging* table
+
+*  each row must be referenced uniquely
+
+*  so that we can reference a row *from* a different table
+
+*  join tables are not necessary to refer to another table --- e.g. one-to-many relations
 
 ## Editions
 
@@ -103,41 +140,170 @@ Table: books
           8         2                 2012               1
           9         3                 2009               4
 
+Standard table with reference to another table: **foreign key**
 
-##  Tables, relationships, and IDs
+##  Constraints
 
-This intermediate table (in this example, BooksAuthors) is known as a "relation" or "join" table. For this method of breaking up data into multiple tables to work reliably, we need to ensure that each row in the books table and each row in the authors table can be referenced uniquely. To do this, we need to assign identifiers to each rown in the book and authors tables, and we use those identifiers to relate the two tables to each other in the third table. In our example, we will call these ID columns 'book_id' and 'author_id'. We will see some examples of these identifiers in the query examples below.
+A goal of DBMS is to translate **data** into **information**
 
-"One-to-many" relationships don't use a third table. This type of relationship links two tables, one containing the data that is on the "one" side of the relationship and the other that is on the "many" side. For example, each book can have many editions, but each edition applies to only a single book:
+*  Structured data are more informative
 
-![Books and editions](assets/BooksEditions.jpg)
+*  Constraints are a form of structure
 
-##  Tables, relationships, and IDs
+*  Examples: instance consistent with schema, foreign key, day $\le$ 31
 
-One-to-many relationships also require that rows in tables have unique IDs, but unlike in the join table used in many-to-many relationship, the table that contains the data describing the "many" side of the relationship has a column reserved for the ID of the "one" side of the relationship. 
+## NULL values
 
-The IDs used to uniquely identify the things described in tables are called "primary keys". If the primary key of one table is used in another table, the key in the other table is called a "foreign key" in that table. For example, the "book_id" column in the Books table is that table's primary key, but the "book_id" column in the Editions table is a foreign key. The purpose of foreign keys is to link the two tables in a one-to-many relationship.
+*  Whenever we don’t have a value, we can put a NULL
 
-##  Tables, relationships, and IDs
+*  Can mean:
+   *  Value does not exists
+   *  Value exists but is unknown
 
-You may be wondering why we didn't use ISBN for the unique ID for each row in the Books table. We could have done that, but there is a problem with ISBNs: it is easy for a human operator to make an error while entering them. Since primary keys need to be unique, we don't want to use something as the primary key that we can't trust to be unique. If we used ISBNs as primary keys, and we encountered one that was the same as an ISBN that was already in our database due to data-entry error, the database would not save the row. If your rows have attributes that you can be absolutley sure will be unique, you can use that attribute as a primary key, but it's usually safer, and a common convention, to let the RDBMS assign an automatically assigned number (an ordinary integer) as the primary key.
+*  Introduce flexible schema
+   *  First Name, *Second name*, Surname
+   
+*  Neither TRUE nor FALSE
 
-##  Tables, relationships, and IDs
+## Data Anomalies
 
-For join tables, the primary key for each row is the unique _combination_ of the foreign keys from the two joined tables. In our example, the primary key of BooksAuthors is the combination of book_id and author_id. A primary key that is comprised of more than one attribute is called a "composite key."
+-------------------------------------------------
+**Teacher**   **Course ID**    **Course Name**
+----------    ---------------  ------------------
+Mary Smith     3               Calculus
 
-Putting together all of our tables, we get a database structure that can be represented like this:
+Ann Brown      4               Progra**m**ing
 
-![Books and editions](assets/BooksAuthorsEditions.jpg)
+Michael Jordan 4               Progra**m**ing
 
-##  Tables, relationships, and IDs
+-------------------------------------------------
 
-Books, Authors, and Editions all have a unique ID (book_id, author_id, and edition_id respectively) that is used as their primary key (labelled as PK in the diagram above), and Editions contains the foreign key (FK) book_id that links it to the Books table in a one-to-many relationship. The join table BooksAuthors only has two columns, book_id and author_id, which are both foreign keys that make up a composite primary key (CPK).
+*  Who teaches a course
+*  Course name and ID
+*  What if we fix the typo?
+*  Can we have a course without teachers?
 
-(It should be noted that this database portrays the relationships between books, authors, and editions in rather simplistic terms. For example, different manifestations of a book such as a paperback and an ebook usually have different ISBNs, and two different editions of a book can have different authors. Despite these issues, the database will suffice as an example of a simple relational model.)
+## Functional dependency
+
+**Definition**:
+A, B: set of attributes
+
+Then $A\to B$ if, for any tuples $t_1$ and $t_2$,
+$t_1[A] = t_2[A] \Rightarrow t_1[B] = t_2[B]$
+
+*  $A\to B$ is a functional dependency
+*  A functional dependency is information
+*  A **bad** functional dependency is a problem
+   *  Goal: remove bad functional dependencies
+   *  How: change the schema
+   *  Hurdle: need the instance to have a dependency
+   
+## Keys and  Superkeys
+
+**Definition**:
+K: set of attributes of relation R
+B is **superkey** of R if for any set B such that $A\cap B=\emptyset$, then $A\to B$.
+
+**Definition**:
+K superkey of relation R.
+K is **key** if no proper subset of K is a superkey of R
+
+A key is a minimal superkey
+
+## Boyce-Codd Normal Form
+
+**Definition**:
+Let $A\to B$ for relation R.
+Then $A\to B$ is good if A is a superkey of R.
+
+**Definition**:
+A relation R is in Boyce-Codd Normal Form if all its functional dependencies are good.
+
+*  Boyce-Codd Normal Form is highly desirable
+*  Boyce-Codd Normal Form not always achievable
+*  Boyce-Codd Normal Form usually achievable
+
+## Normalization
+
+*  A bad functional dependency shows which columns must be moved to a new table
 
 
+-------------------------------------------------
+**Teacher**   **Course ID**    **Course Name**
+----------    ---------------  ------------------
+Mary Smith     3               Calculus
 
+Ann Brown      4               Programming
+
+Michael Jordan 4               Programming
+
+-------------------------------------------------
+
+*  Bad functional dependency: Course ID$\to$Course Name
+
+    *  New table with attributes Course ID, Course Name
+    *  Remove Course Name from current table
+    *  Result: two linked tables
+
+
+## Normalization
+
+----------------------------
+**Teacher**   **Course ID** 
+----------    --------------
+Mary Smith     3
+
+Ann Brown      4
+
+Michael Jordan 4
+
+----------------------------
+
+
+----------------------------------
+**Course ID**    **Course Name**
+--------------  ------------------
+3               Calculus
+
+4               Programming
+
+----------------------------------
+
+Duplicate rows cannot exist
+
+## CSV Files
+
+[Planets.csv](https://raw.githubusercontent.com/mwaskom/seaborn-data/master/planets.csv)
+
+
+```
+method,number,orbital_period,mass,distance,year
+Radial Velocity,1,269.3,7.1,77.4,2006
+Radial Velocity,1,874.774,2.21,56.95,2008
+Radial Velocity,1,763.0,2.6,19.84,2011
+```
+
+*  different separators: space, tab
+*  rigid structure
+*  one table per file
+
+## JSON file 
+
+```
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclock": "CloseDoc()"}
+    ]
+  }}}
+```
+
+*  nested tables
+*  loose structure
 
 ## License
 
