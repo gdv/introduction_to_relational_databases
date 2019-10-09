@@ -357,6 +357,7 @@ GROUP BY genre;
 Is not valid
 
 `SELECT` can have:
+
 *  attributes in `GROUP BY`
 *  aggregate operators
 
