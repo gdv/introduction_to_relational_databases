@@ -225,7 +225,6 @@ WHERE first_name LIKE 'S_a%';
 
  id last_name     first_name     DoB          Income Genre
 --- ------------- -------------- ----------- ------- -------
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime
   4 Novak         Stanislaw      12/12/1992    91000 Crime
   6 Roy           Shanta         11/10/1977    55000 Fantasy
 
@@ -360,6 +359,31 @@ Is not valid
 
 *  attributes in `GROUP BY`
 *  aggregate operators
+
+## Having
+
+Extract the genres that have at least two authors with income larger than 65000
+
+
+```sql
+SELECT genre, count(*) as quanti 
+FROM Authors 
+WHERE income >= 65000
+GROUP BY genre
+HAVING count(*) >= 2;
+```
+
+   genre  quanti
+-------- ---------
+Crime          2
+
+## Reading order
+
+1.  FROM
+2.  WHERE
+3.  GROUP BY
+4.  HAVING
+5.  SELECT
 
 ## License
 
