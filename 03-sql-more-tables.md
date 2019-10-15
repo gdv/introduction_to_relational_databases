@@ -1,5 +1,5 @@
 ---
- title: SQL in two tables
+ title: SQL on two tables
  classoption:
  - aspectratio=169
  header-includes:
@@ -236,37 +236,31 @@ Find who has a last name with exactly 5 characters and  has written a book whose
    2  9876543212345   5 Turay         Tandice
 
 ```sql
-SELECT Books.id, ISBN, Authors.id,
-       last_name, first_name
+SELECT Books.id, ISBN, Authors.id, last_name, first_name
 FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id AND
-      last_name LIKE '_____' AND
-      isbn LIKE "%5";
+      last_name LIKE '_____' AND isbn LIKE "%5";
 ```
 
 ## Table aliases
 
 
 ```sql
-SELECT Books.id, ISBN, Authors.id,
-       last_name, first_name
+SELECT Books.id, ISBN, Authors.id, last_name, first_name
 FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id AND
-      last_name LIKE '_____' AND
-      isbn LIKE "%5";
+      last_name LIKE '_____' AND isbn LIKE "%5";
 ```
 
 
 ```sql
-SELECT b.id, ISBN, a.id,
-       last_name, first_name
+SELECT b.id, ISBN, a.id, last_name, first_name
 FROM Books b, Authors a , BooksAuthors ba
 WHERE b.id = ba.book_id AND
       ba.author_id = a.id AND
-      last_name LIKE '_____' AND
-      isbn LIKE "%5";
+      last_name LIKE '_____' AND isbn LIKE "%5";
 ```
 ## Join Semantics
 
@@ -280,14 +274,13 @@ WHERE T1.B=T2.C;
 1.  Cross product between `T1` and `T2`
 2.  Select only the rows satisfying the `WHERE` clause
 3.  Projection on the `A` column
-
+    
 ## NULL affects queries
 
 For each author, list the ISBN of the books they have written
 
 ```sql
-SELECT Books.id, ISBN, Authors.id,
-       last_name, first_name
+SELECT Books.id, ISBN, Authors.id, last_name, first_name
 FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id;
@@ -312,8 +305,7 @@ But the author with `id` 2 has written no books
 
 
 ```sql
-SELECT Authors.id, last_name, first_name
-       Books.id, ISBN,
+SELECT Authors.id, last_name, first_name, Books.id, ISBN
 FROM Books, Authors LEFT JOIN BooksAuthors
      ON Authors.id=BooksAuthors.author_id
 WHERE Books.id = BooksAuthors.book_id;
@@ -401,7 +393,7 @@ SELECT Authors.id, last_name, first_name,
 FROM Books, Authors LEFT JOIN BooksAuthors
      ON Authors.id=BooksAuthors.author_id
 WHERE Books.id = BooksAuthors.book_id
-GROUP BY Authors.id, last_name, first_name,;
+GROUP BY Authors.id, last_name, first_name;
 ```
 
 `count(Books.id)` counts the number of tuples where `Books.id` is not NULL
