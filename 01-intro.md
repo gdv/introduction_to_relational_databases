@@ -202,7 +202,10 @@ $t_1[A] = t_2[A] \Rightarrow t_1[B] = t_2[B]$
 
 **Definition**:
 K: set of attributes of relation R
-B is **superkey** of R if for any set B such that $A\cap B=\emptyset$, then $A\to B$.
+B is **superkey** of R if for any set B such that $K\cap B=\emptyset$, then $K\to B$.
+Equivalent to
+for any tuples $t_1$ and $t_2$,
+$t_1[K] = t_2[K] \Rightarrow t_1 = t_2$
 
 **Definition**:
 K superkey of relation R.

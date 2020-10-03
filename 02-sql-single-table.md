@@ -307,7 +307,7 @@ Also SUM, MIN, MAX
 
 ## Group By
 
-For each genre, count the number of authors with income larger than 64000
+For each genre, count the number of authors with income larger than 65000
 
 
 ```sql
@@ -336,8 +336,8 @@ FROM Authors
 GROUP BY genre;
 ```
 
-   genre  count(*)
--------- ---------
+   genre  avg(income)
+-------- ------------
 Fantasy   79666.67
 Crime     78000
 Romance   81000
