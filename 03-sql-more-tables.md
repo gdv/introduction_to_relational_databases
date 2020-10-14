@@ -389,7 +389,7 @@ For each author, find the number of  books they have written
 
 ```sql
 SELECT Authors.id, last_name, first_name,
-       count(*) as number
+       count(Books.id) as number
 FROM Books, Authors LEFT JOIN BooksAuthors
      ON Authors.id=BooksAuthors.author_id
 WHERE Books.id = BooksAuthors.book_id
