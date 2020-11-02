@@ -94,7 +94,7 @@ Find the author(s) with maximum income
 SELECT last_name, first_name
 FROM Authors A1
 WHERE A1.income >= ALL SELECT A2.income
-                       FROM Authors
+                       FROM Authors A2
 ```
 
 

@@ -28,7 +28,7 @@ Each row in the table describes a single book
 
 The data is organized into columns
 
-Each *entry* (or cell) contains **a single piece of data**. 
+Each *entry* (or cell) contains **a single piece of data**.
 
 How do we handle a book with two authors?
 
@@ -73,9 +73,9 @@ book_id ISBN            title
 1       7654321123456   Creating relational databases for fun and profit
 
 2       9876543212345   Relational databases for really, really smart people
-                      
+
 3       3212345678909   My life with relational databases: a memoir
-                      
+
 4       8172635412345   Relational databases: an existential journey
 
 ------------------------------------------------------------------------------
@@ -89,10 +89,10 @@ Table: books
 
  author_id last_name     first_name
 ---------- ------------- --------------
-         1 Lopez Baranda Christina 
+         1 Lopez Baranda Christina
          2 Jin-Soon      Sin
          3 Jones         Hannah
-         4 Novak         Stanislaw 
+         4 Novak         Stanislaw
          5 Turay         Tandice
          6 Roy           Shanta
          7 Berger        Henry
@@ -106,13 +106,13 @@ Table: books
 
  book_id  author_id
 -------- ----------
-       3          6 
-       2          4 
-       2          5 
-       1          1 
-       1          3 
-       1          5 
-       4          8 
+       3          6
+       2          4
+       2          5
+       1          1
+       1          3
+       1          5
+       4          8
 
 Bridging table
 
@@ -162,7 +162,7 @@ A goal of DBMS is to translate **data** into **information**
 
 *  Introduce flexible schema
    *  First Name, *Second name*, Surname
-   
+
 *  Neither TRUE nor FALSE
 
 ## Data Anomalies
@@ -197,7 +197,7 @@ $t_1[A] = t_2[A] \Rightarrow t_1[B] = t_2[B]$
    *  Goal: remove bad functional dependencies
    *  How: change the schema
    *  Hurdle: need the instance to have a dependency
-   
+
 ## Keys and  Superkeys
 
 **Definition**:
@@ -212,6 +212,14 @@ K superkey of relation R.
 K is **key** if no proper subset of K is a superkey of R
 
 A key is a minimal superkey
+
+## Example: Editions table
+
+1.  The pair (edition_id, edition_number) of the table Editions is a superkey, since there are no two rows of Editions that have the same values of edition_id and edition_number
+2.  The pair (edition_id, edition_number) of the table Editions is a not a key, since we can remove an attribute (edition_number) and obtain a superkey (the single attribute edition_id)
+3.  The attribute edition_id is a key. Since it consists of a single attribute, its minimality is trivial
+4.  The pair (book_id, edition_number) is a superkey. Since removing any of its attribute results in set of attributes that have duplicates, (book_id, edition_number) is also a key.
+5.  book_id is a foreign key, since the values of that attributes are found in the key of the Books table.
 
 ## Boyce-Codd Normal Form
 
@@ -252,7 +260,7 @@ Michael Jordan 4               Programming
 ## Normalization
 
 ----------------------------
-**Teacher**   **Course ID** 
+**Teacher**   **Course ID**
 ----------    --------------
 Mary Smith     3
 
@@ -290,7 +298,7 @@ Radial Velocity,1,763.0,2.6,19.84,2011
 *  rigid structure
 *  one table per file
 
-## JSON file 
+## JSON file
 
 ```
 {"menu": {
@@ -310,6 +318,6 @@ Radial Velocity,1,763.0,2.6,19.84,2011
 
 ## License
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Mark Jordan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. 
-<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Gianluca Della Vedova</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. 
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Mark Jordan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
+<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Gianluca Della Vedova</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
 Everything in the 'scripts' directory is in the <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain (CC0)</a>.

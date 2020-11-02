@@ -122,7 +122,7 @@ Tandice     Turay
 ```sql
 SELECT first_name, last_name
 FROM Authors, BooksAuthors
-WHERE BooksAuthors.author_id = Authors.author_id
+WHERE BooksAuthors.author_id = Authors.id
 AND book_id = 1;
 ```
 ## Query (join version)
@@ -130,7 +130,7 @@ AND book_id = 1;
 ```sql
 SELECT first_name, last_name
 FROM Authors JOIN BooksAuthors
-     ON BooksAuthors.author_id = Authors.author_id
+     ON BooksAuthors.author_id = Authors.id
 WHERE book_id = 1;
 ```
 
@@ -275,7 +275,7 @@ WHERE T1.B=T2.C;
 2.  Select only the rows satisfying the `WHERE` clause
 3.  Projection on the `A` column
     
-## NULL affects queries
+## No corresponding row
 
 For each author, list the ISBN of the books they have written
 
@@ -288,7 +288,7 @@ WHERE Books.id = BooksAuthors.book_id AND
 
 But the author with `id` 2 has written no books
 
-## NULL affects queries
+## No corresponding row
 
 
   id           ISBN  id last_name     first_name
