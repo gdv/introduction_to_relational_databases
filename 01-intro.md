@@ -13,9 +13,9 @@ Relational databases organize data into tables
 
 Tables can be linked together
 
-A table is a relation.
+A relation is a table
 
-Is a relation also a table?
+When a table is a relation?
 
 ![Some sample books](assets/sample_book_list.png)
 
