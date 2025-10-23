@@ -35,16 +35,7 @@ FROM Authors
 WHERE last_name LIKE '%o%'
 ```
 
-## Result
-
- 
-  id last_name     first_name     DoB          Income Genre
- --- ------------- -------------- ----------- ------- -------
-   3 Jones         Hannah         01/02/1973   129000 Fantasy
-   4 Novak         Stanislaw      12/12/1992    91000 Crime
-
-
-## Remove Intersect
+## Remove Intersect with IN
 
 ```sql
 SELECT last_name, first_name
@@ -54,6 +45,26 @@ WHERE Income > 90000 AND last_name IN
   FROM Authors
   WHERE last_name LIKE '%o%'
 ```
+
+## Remove Intersect with EXISTS
+
+```sql
+SELECT A1.last_name, A1.first_name
+FROM Authors A1
+WHERE A1.Income > 90000 AND EXISTS 
+  SELECT *
+  FROM Authors A2
+  WHERE A2.id=A1.id AND  A2.last_name LIKE '%o%'
+```
+
+## Result
+
+ 
+  id last_name     first_name     DoB          Income Genre
+ --- ------------- -------------- ----------- ------- -------
+   3 Jones         Hannah         01/02/1973   129000 Fantasy
+   4 Novak         Stanislaw      12/12/1992    91000 Crime
+
 
 ## Except
 
@@ -67,14 +78,7 @@ FROM Authors
 WHERE last_name LIKE '%o%'
 ```
 
-## Result
-
- 
-  id last_name     first_name     DoB          Income Genre
- --- ------------- -------------- ----------- ------- -------
-   5 Turay         Tandice        09/07/1980    99000 Romance
-
-## Remove Except
+## Remove Except with NOT IN
 
 ```sql
 SELECT last_name, first_name
@@ -85,7 +89,26 @@ WHERE Income > 90000 AND id NOT IN
   WHERE last_name LIKE '%o%'
 ```
 
-## ALL/ANY
+
+## Remove Except with NOT EXISTS
+
+```sql
+SELECT A1.last_name, A1.first_name
+FROM Authors A1
+WHERE A1.Income > 90000 AND NOT EXISTS 
+  SELECT *
+  FROM Authors A2
+  WHERE A2.id=A1.id AND  A2.last_name LIKE '%o%'
+```
+
+## Result
+
+ 
+  id last_name     first_name     DoB          Income Genre
+ --- ------------- -------------- ----------- ------- -------
+   5 Turay         Tandice        09/07/1980    99000 Romance
+
+## Row achieving a maximum
 
 Find the author(s) with maximum income
 
@@ -93,8 +116,9 @@ Find the author(s) with maximum income
 ```sql
 SELECT last_name, first_name
 FROM Authors A1
-WHERE A1.income >= ALL SELECT A2.income
-                       FROM Authors A2
+WHERE NOT EXISTS SELECT *
+                 FROM Authors A2
+                 WHERE A1.income < A2.income
 ```
 
 
