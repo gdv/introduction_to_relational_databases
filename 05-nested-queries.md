@@ -108,7 +108,7 @@ WHERE A1.Income > 90000 AND NOT EXISTS
  --- ------------- -------------- ----------- ------- -------
    5 Turay         Tandice        09/07/1980    99000 Romance
 
-## Row achieving a maximum
+## Row achieving a maximum with EXISTS
 
 Find the author(s) with maximum income
 
@@ -119,6 +119,18 @@ FROM Authors A1
 WHERE NOT EXISTS SELECT *
                  FROM Authors A2
                  WHERE A1.income < A2.income
+```
+
+## Row achieving a maximum with IN
+
+Find the author(s) with maximum income
+
+
+```sql
+SELECT last_name, first_name
+FROM Authors A1
+WHERE A1.income IN (SELECT max(A2.income)
+                    FROM Authors A2)
 ```
 
 
