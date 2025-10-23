@@ -1,10 +1,10 @@
 ---
- title: Nested queries 
- classoption:
- - aspectratio=169
- header-includes:
- -  \setmonofont{Ubuntu Mono}
- - \hypersetup{colorlinks=true}
+title: Nested queries 
+author: "Gianluca Della Vedova"
+institute: "University of Milano - Bicocca"
+fonttheme: "professionalfonts"
+fontsize: 14pt
+toc: false
 ---
 
 
@@ -132,7 +132,6 @@ FROM Authors A1
 WHERE A1.income IN (SELECT max(A2.income)
                     FROM Authors A2)
 ```
-
 
 ## License
 
