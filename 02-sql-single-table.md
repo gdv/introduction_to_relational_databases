@@ -1,3 +1,11 @@
+---
+header-includes:
+- \setsansfont{Open Sans}
+- \lstset{basicstyle=\ttfamily,breaklines=false}
+- \lstset{backgroundcolor=\color{black!10},frame=TRBL, frameround=tttt}
+- \setmonofont{Noto Sans Mono}
+---
+
 # SQL on 1 table
 
 

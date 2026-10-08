@@ -3,7 +3,10 @@
  classoption:
  - aspectratio=169
  header-includes:
- -  \setmonofont{Ubuntu Mono}
+ - \setsansfont{Open Sans}
+ - \lstset{basicstyle=\ttfamily,breaklines=false}
+ - \lstset{backgroundcolor=\color{black!10},frame=TRBL, frameround=tttt}
+ -  \setmonofont{Noto Sans Mono}
  - \hypersetup{colorlinks=true}
 ---
 
