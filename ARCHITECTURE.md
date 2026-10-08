@@ -33,6 +33,8 @@ README; one GitHub Actions workflow publishes the PDFs to GitHub Pages. Content 
 - `scripts/` — `createdbs.sh` (per-student MySQL DB/user provisioning),
   `Books.sql` / `ClassSchedules.sql` (MySQL 5.5 dumps of the two course
   schemas), `Books.mwb` / `ClassSchedules.mwb` (MySQL Workbench models).
+- `index.html` — GitHub Pages landing page listing the decks
+  (hand-maintained: add a `<li>` when adding a deck).
 - `docs/` — legacy Jekyll site (`_config.yml` → `jekyll-theme-minimal`);
   superseded by the Pages workflow below.
 - `.github/workflows/pages.yml` — builds the decks and deploys them to
@@ -66,8 +68,8 @@ README; one GitHub Actions workflow publishes the PDFs to GitHub Pages. Content 
   --pdf-engine xelatex` → one Beamer PDF per deck. Decks build in
   parallel (`MAKEFLAGS += -j$(nproc)`).
 - CI (`pages.yml`, on push to `master`): apt-installs pandoc, TeX Live
-  (xetex) and the fonts, runs `make pdf`, copies `0*.pdf` plus a
-  generated `index.html` into the Pages artifact, deploys.
+  (xetex) and the fonts, runs `make pdf`, copies `0*.pdf` plus
+  `index.html` into the Pages artifact, deploys.
 - `make 0X.html` (rule exists, commented out of `all:`):
   `pandoc -t revealjs --standalone --self-contained -V theme=moon`.
 - `dump_northwind.sh`: iterates `sqlite3 Northwind_large.sqlite
