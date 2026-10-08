@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction to Relational Databases</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafafa;
+    --fg: #23373b;
+    --muted: #5f6f72;
+    --card: #ffffff;
+    --border: #dfe3e4;
+    --accent: #eb811b;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b2629;
+      --fg: #e8eced;
+      --muted: #a3b0b3;
+      --card: #23373b;
+      --border: #34494e;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.55 "Open Sans", system-ui, sans-serif;
+  }
+  main {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 4rem;
+  }
+  h1 { font-size: 1.9rem; font-weight: 700; margin: 0 0 .25rem; }
+  .subtitle { color: var(--muted); margin: 0 0 2.5rem; }
+  ol { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+  a.deck {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    color: inherit;
+    text-decoration: none;
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  a.deck:hover, a.deck:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgb(0 0 0 / .08);
+  }
+  .num { font-family: "Noto Sans Mono", ui-monospace, monospace; color: var(--accent); font-weight: 600; }
+  .title { font-weight: 600; font-size: 1.05rem; }
+  .topics { display: block; color: var(--muted); font-size: .9rem; margin-top: .15rem; }
+  .pdf { margin-left: auto; font-size: .8rem; color: var(--muted); white-space: nowrap; }
+  footer { margin-top: 3rem; font-size: .8rem; color: var(--muted); }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Introduction to Relational Databases</h1>
+  <p class="subtitle">Gianluca Della Vedova · University of Milano-Bicocca · Lecture slides</p>
+
+  <ol>
+    <li><a class="deck" href="01-intro.pdf">
+      <span class="num">01</span>
+      <span><span class="title">Introduction to relational databases</span>
+      <span class="topics">Tables, keys, NULL values, anomalies, functional dependencies, normalization</span></span>
+      <span class="pdf">PDF</span></a></li>
+    <li><a class="deck" href="02-sql-single-table.pdf">
+      <span class="num">02</span>
+      <span><span class="title">SQL on one table</span>
+      <span class="topics">SELECT, WHERE, DISTINCT, LIKE, ORDER BY, aggregates, GROUP BY, HAVING</span></span>
+      <span class="pdf">PDF</span></a></li>
+    <li><a class="deck" href="03-sql-more-tables.pdf">
+      <span class="num">03</span>
+      <span><span class="title">SQL on two tables</span>
+      <span class="topics">Foreign keys, joins, table aliases, LEFT JOIN, counting with NULLs</span></span>
+      <span class="pdf">PDF</span></a></li>
+    <li><a class="deck" href="04-set-operations.pdf">
+      <span class="num">04</span>
+      <span><span class="title">Set operations with SQL</span>
+      <span class="topics">INTERSECT, UNION, UNION ALL, EXCEPT</span></span>
+      <span class="pdf">PDF</span></a></li>
+    <li><a class="deck" href="05-nested-queries.pdf">
+      <span class="num">05</span>
+      <span><span class="title">Nested queries</span>
+      <span class="topics">IN, NOT IN, EXISTS, NOT EXISTS, rows achieving a maximum</span></span>
+      <span class="pdf">PDF</span></a></li>
+  </ol>
+
+  <footer>
+    Except where noted, text and images are by Mark Jordan and Gianluca Della Vedova, licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+    Source: <a href="https://github.com/gdv/introduction_to_relational_databases">github.com/gdv/introduction_to_relational_databases</a>
+  </footer>
+</main>
+</body>
+</html>
