@@ -1,0 +1,13 @@
+{
+  "name": "introduction-to-relational-databases",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "slidev --open",
+    "build": "make site"
+  },
+  "dependencies": {
+    "@slidev/cli": "latest",
+    "slidev-theme-nord": "latest"
+  }
+}

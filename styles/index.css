@@ -1,0 +1,25 @@
+/* Deck-wide overrides, loaded automatically by Slidev after the theme */
+
+:root {
+  /* Larger SQL code blocks */
+  --slidev-code-font-size: 18px;
+  --slidev-code-line-height: 27px;
+}
+
+/* The nord theme pads every <code>, which indents the first line of a block */
+.slidev-layout pre code {
+  padding: 0;
+  font-size: inherit;
+  background-color: transparent;
+}
+
+/* Smaller, denser tables */
+.slidev-layout table {
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+.slidev-layout th,
+.slidev-layout td {
+  padding: 0.35em 0.75em;
+}
