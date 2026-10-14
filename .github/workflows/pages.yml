@@ -20,22 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pandoc, XeLaTeX and fonts
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            pandoc make \
-            texlive-xetex texlive-latex-recommended texlive-latex-extra \
-            texlive-fonts-recommended lmodern fonts-open-sans fonts-noto-mono
-          fc-cache -f
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
 
-      - name: Build PDFs
-        run: make pdf
+      - name: Install Slidev
+        run: npm ci
 
-      - name: Assemble site
-        run: |
-          mkdir -p _site
-          cp index.html 0*.pdf _site/
+      - name: Build decks and landing page
+        run: make site
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -1,400 +1,562 @@
 ---
-header-includes:
-- \setsansfont{Open Sans}
-- \lstset{basicstyle=\ttfamily,breaklines=false}
-- \lstset{backgroundcolor=\color{black!10},frame=TRBL, frameround=tttt}
-- \setmonofont{Noto Sans Mono}
+theme: nord
+title: SQL on 1 table
+info: Introduction to Relational Databases — SQL on a single table
+author: Gianluca Della Vedova
+layout: cover
+class: text-center
+exportFilename: 02-sql-single-table
 ---
 
 # SQL on 1 table
 
+Introduction to Relational Databases
 
-## SQL is a...
+---
 
-*  Data Definition Language (DDL)
-   *  Define relational schemata
-   *  Create/alter/delete tables and their attributes
-   *  We do not care
-*  Data Manipulation Language (DML)
-   *  Insert/delete/modify tuples in tables
-   *  Query one or more tables – discussed next!
+# SQL is a...
 
-## Authors table
+<v-clicks depth="2">
 
+- Data Definition Language (DDL)
+  - Define relational schemata
+  - Create/alter/delete tables and their attributes
+  - We do not care
+- Data Manipulation Language (DML)
+  - Insert/delete/modify tuples in tables
+  - Query one or more tables – discussed next!
 
- id last_name     first_name     DoB          Income Genre
---- ------------- -------------- ----------- ------- -------
-  1 Lopez Baranda Christina      15/11/2000    55000 Fantasy
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime
-  3 Jones         Hannah         01/02/1973   129000 Fantasy
-  4 Novak         Stanislaw      12/12/1992    91000 Crime
-  5 Turay         Tandice        09/07/1980    99000 Romance
-  6 Roy           Shanta         11/10/1977    55000 Fantasy
-  7 Berger        Henry          15/08/1956    63000 Romance
-  8 Khatami       Paree          11/10/1966    86000 Sci-Fi
+</v-clicks>
 
+---
 
-## Querying tables using SQL
+# Authors table
 
+| id  | last_name     | first_name | DoB        | Income | Genre   |
+| --- | ------------- | ---------- | ---------- | ------ | ------- |
+| 1   | Lopez Baranda | Christina  | 15/11/2000 | 55000  | Fantasy |
+| 2   | Jin-Soon      | Sin        | 29/03/1983 | 65000  | Crime   |
+| 3   | Jones         | Hannah     | 01/02/1973 | 129000 | Fantasy |
+| 4   | Novak         | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 5   | Turay         | Tandice    | 09/07/1980 | 99000  | Romance |
+| 6   | Roy           | Shanta     | 11/10/1977 | 55000  | Fantasy |
+| 7   | Berger        | Henry      | 15/08/1956 | 63000  | Romance |
+| 8   | Khatami       | Paree      | 11/10/1966 | 86000  | Sci-Fi  |
+
+---
+
+# Querying tables using SQL
 
 ```sql
-SELECT * 
-FROM Authors 
+SELECT *
+FROM Authors
 ORDER by last_name;
 ```
 
- id last_name     first_name     DoB          Income Genre  
---- ------------- -------------- ----------- ------- -------
-  7 Berger        Henry          15/08/1956    63000 Romance
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime  
-  3 Jones         Hannah         01/02/1973   129000 Fantasy
-  8 Khatami       Paree          11/10/1966    86000 Sci-Fi
-  1 Lopez Baranda Christina      15/11/2000    55000 Fantasy
-  4 Novak         Stanislaw      12/12/1992    91000 Crime
-  6 Roy           Shanta         11/10/1977    55000 Fantasy
-  5 Turay         Tandice        09/07/1980    99000 Romance
+<v-click>
 
+| id  | last_name     | first_name | DoB        | Income | Genre   |
+| --- | ------------- | ---------- | ---------- | ------ | ------- |
+| 7   | Berger        | Henry      | 15/08/1956 | 63000  | Romance |
+| 2   | Jin-Soon      | Sin        | 29/03/1983 | 65000  | Crime   |
+| 3   | Jones         | Hannah     | 01/02/1973 | 129000 | Fantasy |
+| 8   | Khatami       | Paree      | 11/10/1966 | 86000  | Sci-Fi  |
+| 1   | Lopez Baranda | Christina  | 15/11/2000 | 55000  | Fantasy |
+| 4   | Novak         | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 6   | Roy           | Shanta     | 11/10/1977 | 55000  | Fantasy |
+| 5   | Turay         | Tandice    | 09/07/1980 | 99000  | Romance |
 
-## Select From Where
+</v-click>
 
-Basic form 
+---
 
-**`SELECT`** `<attributes>`  
-**`FROM`** `<one or more relations>`  
-**`WHERE`** `<conditions>`  
+# Select From Where
 
+Basic form
+
+```sql
+SELECT <attributes>
+FROM <one or more relations>
+WHERE <conditions>
+```
+
+<v-click>
 
 The `WHERE` clause is optional
 
-## Selecting
+</v-click>
+
+---
+
+# Selecting
 
 Choosing some rows
 
-```sql
-SELECT * 
-FROM Authors 
+```sql {3}
+SELECT *
+FROM Authors
 WHERE income >= 65000;
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre  
---- ------------- -------------- ----------- ------- -------
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime  
-  3 Jones         Hannah         01/02/1973   129000 Fantasy
-  4 Novak         Stanislaw      12/12/1992    91000 Crime  
-  5 Turay         Tandice        09/07/1980    99000 Romance
-  8 Khatami       Paree          11/10/1966    86000 Sci-Fi
-                                                     
-## Selecting 2
+| id  | last_name | first_name | DoB        | Income | Genre   |
+| --- | --------- | ---------- | ---------- | ------ | ------- |
+| 2   | Jin-Soon  | Sin        | 29/03/1983 | 65000  | Crime   |
+| 3   | Jones     | Hannah     | 01/02/1973 | 129000 | Fantasy |
+| 4   | Novak     | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 5   | Turay     | Tandice    | 09/07/1980 | 99000  | Romance |
+| 8   | Khatami   | Paree      | 11/10/1966 | 86000  | Sci-Fi  |
 
-```sql
-SELECT * 
-FROM Authors 
+</v-click>
+
+---
+
+# Selecting 2
+
+```sql {3}
+SELECT *
+FROM Authors
 WHERE last_name = 'Jones';
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre  
---- ------------- -------------- ----------- ------- -------
-  3 Jones         Hannah         01/02/1973   129000 Fantasy
+| id  | last_name | first_name | DoB        | Income | Genre   |
+| --- | --------- | ---------- | ---------- | ------ | ------- |
+| 3   | Jones     | Hannah     | 01/02/1973 | 129000 | Fantasy |
 
+</v-click>
+
+<v-click>
 
 The result is a table
 
-## Projection
+</v-click>
+
+---
+
+# Projection
 
 Choosing some columns
 
-```sql
+```sql {1}
 SELECT last_name, first_name, income
-FROM Authors 
+FROM Authors
 WHERE income >= 65000;
 ```
 
+<v-click>
 
-last_name     first_name      Income
-------------- -------------- -------
-Jin-Soon      Sin              65000
-Jones         Hannah          129000
-Novak         Stanislaw        91000
-Turay         Tandice          99000
-Khatami       Paree            86000
-  
+| last_name | first_name | Income |
+| --------- | ---------- | ------ |
+| Jin-Soon  | Sin        | 65000  |
+| Jones     | Hannah     | 129000 |
+| Novak     | Stanislaw  | 91000  |
+| Turay     | Tandice    | 99000  |
+| Khatami   | Paree      | 86000  |
 
-## Projection
+</v-click>
+
+---
+
+# Projection
 
 Selection before projection
 
-```sql
+```sql {3|1}
 SELECT last_name, first_name
-FROM Authors 
+FROM Authors
 WHERE income >= 65000;
 ```
 
+<v-click at="2">
 
+| last_name | first_name |
+| --------- | ---------- |
+| Jin-Soon  | Sin        |
+| Jones     | Hannah     |
+| Novak     | Stanislaw  |
+| Turay     | Tandice    |
+| Khatami   | Paree      |
 
-last_name     first_name    
-------------- --------------
-Jin-Soon      Sin           
-Jones         Hannah        
-Novak         Stanislaw     
-Turay         Tandice       
-Khatami       Paree         
-  
-## Remember
+</v-click>
 
-*  commands are case **insensitive**
-*  value are case **sensitive**
-*  single quotes `'Jones'`, not `"Jones"`
+---
 
-## Duplicates
+# Remember
 
+<v-clicks>
+
+- commands are case **insensitive**
+- value are case **sensitive**
+- single quotes `'Jones'`, not `"Jones"`
+
+</v-clicks>
+
+---
+layout: two-cols
+layoutClass: gap-x-8
+---
+
+# Duplicates
 
 ```sql
 SELECT Genre
 FROM Authors;
 ```
 
-Genre
---------- -
-Fantasy
-Crime  
-Fantasy
-Crime  
-Romance
-Fantasy
-Romance
-Sci-Fi 
+::right::
 
-## Duplicates 2
+<v-click>
 
+| Genre   |
+| ------- |
+| Fantasy |
+| Crime   |
+| Fantasy |
+| Crime   |
+| Romance |
+| Fantasy |
+| Romance |
+| Sci-Fi  |
 
-```sql
+</v-click>
+
+---
+layout: two-cols
+layoutClass: gap-x-8
+---
+
+# Duplicates 2
+
+```sql {1}
 SELECT DISTINCT Genre
 FROM Authors;
 ```
 
-Genre  
-------- -
-Fantasy
-Crime  
-Romance
-Sci-Fi 
+::right::
 
-## Compound conditions
+<v-click>
 
+| Genre   |
+| ------- |
+| Fantasy |
+| Crime   |
+| Romance |
+| Sci-Fi  |
 
-```sql
-SELECT * 
-FROM Authors 
+</v-click>
+
+---
+
+# Compound conditions
+
+```sql {3}
+SELECT *
+FROM Authors
 WHERE income >= 65000 AND Genre = 'Crime';
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre  
---- ------------- -------------- ----------- ------- -------
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime  
-  4 Novak         Stanislaw      12/12/1992    91000 Crime  
+| id  | last_name | first_name | DoB        | Income | Genre |
+| --- | --------- | ---------- | ---------- | ------ | ----- |
+| 2   | Jin-Soon  | Sin        | 29/03/1983 | 65000  | Crime |
+| 4   | Novak     | Stanislaw  | 12/12/1992 | 91000  | Crime |
 
-## Conditions on strings
+</v-click>
 
-*  `%` any string
-*  `_` any character
-*  use **`LIKE`**
+---
+
+# Conditions on strings
+
+- `%` any string
+- `_` any character
+- use **`LIKE`**
 
 Find all authors whose first name begins with "S"
 
-
-```sql
-SELECT * 
-FROM Authors 
+```sql {3}
+SELECT *
+FROM Authors
 WHERE first_name LIKE 'S%';
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre
---- ------------- -------------- ----------- ------- -------
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime
-  4 Novak         Stanislaw      12/12/1992    91000 Crime
-  6 Roy           Shanta         11/10/1977    55000 Fantasy
+| id  | last_name | first_name | DoB        | Income | Genre   |
+| --- | --------- | ---------- | ---------- | ------ | ------- |
+| 2   | Jin-Soon  | Sin        | 29/03/1983 | 65000  | Crime   |
+| 4   | Novak     | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 6   | Roy       | Shanta     | 11/10/1977 | 55000  | Fantasy |
 
+</v-click>
 
-## Conditions on strings
+---
 
-Find all authors whose first name begins with "*S*" and the third letter is "*a*"
+# Conditions on strings
 
+Find all authors whose first name begins with "_S_" and the third letter is "_a_"
 
-```sql
-SELECT * 
-FROM Authors 
+```sql {3}
+SELECT *
+FROM Authors
 WHERE first_name LIKE 'S_a%';
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre
---- ------------- -------------- ----------- ------- -------
-  4 Novak         Stanislaw      12/12/1992    91000 Crime
-  6 Roy           Shanta         11/10/1977    55000 Fantasy
+| id  | last_name | first_name | DoB        | Income | Genre   |
+| --- | --------- | ---------- | ---------- | ------ | ------- |
+| 4   | Novak     | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 6   | Roy       | Shanta     | 11/10/1977 | 55000  | Fantasy |
 
-## Ordering
+</v-click>
 
-```sql
-SELECT * 
-FROM Authors 
+---
+
+# Ordering
+
+```sql {4}
+SELECT *
+FROM Authors
 WHERE income >= 65000
 ORDER BY last_name;
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre  
---- ------------- -------------- ----------- ------- -------
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime  
-  3 Jones         Hannah         01/02/1973   129000 Fantasy
-  8 Khatami       Paree          11/10/1966    86000 Sci-Fi
-  4 Novak         Stanislaw      12/12/1992    91000 Crime  
-  5 Turay         Tandice        09/07/1980    99000 Romance
+| id  | last_name | first_name | DoB        | Income | Genre   |
+| --- | --------- | ---------- | ---------- | ------ | ------- |
+| 2   | Jin-Soon  | Sin        | 29/03/1983 | 65000  | Crime   |
+| 3   | Jones     | Hannah     | 01/02/1973 | 129000 | Fantasy |
+| 8   | Khatami   | Paree      | 11/10/1966 | 86000  | Sci-Fi  |
+| 4   | Novak     | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 5   | Turay     | Tandice    | 09/07/1980 | 99000  | Romance |
 
-## Ordering 2
+</v-click>
 
-```sql
-SELECT * 
-FROM Authors 
+---
+
+# Ordering 2
+
+```sql {4}
+SELECT *
+FROM Authors
 WHERE income >= 65000
 ORDER BY Genre, DESC income;
 ```
 
+<v-click>
 
- id last_name     first_name     DoB          Income Genre  
---- ------------- -------------- ----------- ------- -------
-  4 Novak         Stanislaw      12/12/1992    91000 Crime  
-  2 Jin-Soon      Sin            29/03/1983    65000 Crime  
-  3 Jones         Hannah         01/02/1973   129000 Fantasy
-  5 Turay         Tandice        09/07/1980    99000 Romance
-  8 Khatami       Paree          11/10/1966    86000 Sci-Fi
+| id  | last_name | first_name | DoB        | Income | Genre   |
+| --- | --------- | ---------- | ---------- | ------ | ------- |
+| 4   | Novak     | Stanislaw  | 12/12/1992 | 91000  | Crime   |
+| 2   | Jin-Soon  | Sin        | 29/03/1983 | 65000  | Crime   |
+| 3   | Jones     | Hannah     | 01/02/1973 | 129000 | Fantasy |
+| 5   | Turay     | Tandice    | 09/07/1980 | 99000  | Romance |
+| 8   | Khatami   | Paree      | 11/10/1966 | 86000  | Sci-Fi  |
 
-## Count
+</v-click>
 
-```sql
-SELECT count(*) 
-FROM Authors 
+---
+
+# Count
+
+```sql {1}
+SELECT count(*)
+FROM Authors
 WHERE income >= 65000;
 ```
- count
------- -
-     5
+
+<v-click>
+
+| count |
+| ----- |
+| 5     |
 
 Counts the number of rows
 
-## Count 2
+</v-click>
 
-```sql
-SELECT count(DoB, first_name) 
-FROM Authors 
+---
+
+# Count 2
+
+```sql {1}
+SELECT count(DoB, first_name)
+FROM Authors
 WHERE income >= 65000;
 ```
- DoB  first_name
----- -----------
-5        5
+
+<v-click>
+
+| DoB | first_name |
+| --- | ---------- |
+| 5   | 5          |
 
 Counts the number of rows without null values
 
+</v-click>
 
-## AVG
+---
 
-```sql
-SELECT AVG(income) 
-FROM Authors 
+# AVG
+
+```sql {1}
+SELECT AVG(income)
+FROM Authors
 WHERE income >= 65000;
 ```
-   avg
------- -
-94000
 
+<v-click>
 
-Also SUM, MIN, MAX
+| avg   |
+| ----- |
+| 94000 |
 
-## Group By
+</v-click>
+
+<v-click>
+
+Also `SUM`, `MIN`, `MAX`
+
+</v-click>
+
+---
+layout: two-cols-header
+layoutClass: gap-x-8
+---
+
+# Group By
 
 For each genre, count the number of authors with income larger than 65000
 
+::left::
 
-```sql
-SELECT genre, count(*) 
-FROM Authors 
+```sql {4}
+SELECT genre, count(*)
+FROM Authors
 WHERE income >= 65000
 GROUP BY genre;
 ```
 
-   genre  count(*)
--------- ---------
-Fantasy        1
-Crime          2
-Romance        1
-Sci-Fi         1
+::right::
 
+<v-click>
 
-## Group By
+| genre   | count(\*) |
+| ------- | --------- |
+| Fantasy | 1         |
+| Crime   | 2         |
+| Romance | 1         |
+| Sci-Fi  | 1         |
 
-For each genre, find the average income 
+</v-click>
 
+---
+layout: two-cols-header
+layoutClass: gap-x-8
+---
 
-```sql
-SELECT genre, avg(income) 
-FROM Authors 
+# Group By
+
+For each genre, find the average income
+
+::left::
+
+```sql {3}
+SELECT genre, avg(income)
+FROM Authors
 GROUP BY genre;
 ```
 
-   genre  avg(income)
--------- ------------
-Fantasy   79666.67
-Crime     78000
-Romance   81000
-Sci-Fi    86000
+::right::
 
-## Attributes
+<v-click>
 
+| genre   | avg(income) |
+| ------- | ----------- |
+| Fantasy | 79666.67    |
+| Crime   | 78000       |
+| Romance | 81000       |
+| Sci-Fi  | 86000       |
 
+</v-click>
 
-```sql
-SELECT genre, last_name, avg(income) 
-FROM Authors 
+---
+
+# Attributes
+
+```sql {1}
+SELECT genre, last_name, avg(income)
+FROM Authors
 GROUP BY genre;
 ```
 
 Is not valid
 
+<v-click>
+
 `SELECT` can have:
 
-*  attributes in `GROUP BY`
-*  aggregate operators
+- attributes in `GROUP BY`
+- aggregate operators
 
-## Having
+</v-click>
+
+---
+layout: two-cols-header
+layoutClass: gap-x-8
+---
+
+# Having
 
 Extract the genres that have at least two authors with income larger than 65000
 
+::left::
 
-```sql
-SELECT genre, count(*) as quanti 
-FROM Authors 
+```sql {5}
+SELECT genre, count(*) as quanti
+FROM Authors
 WHERE income >= 65000
 GROUP BY genre
 HAVING count(*) >= 2;
 ```
 
-   genre  quanti
--------- ---------
-Crime          2
+::right::
 
-## Reading order
+<v-click>
 
-1.  FROM
-2.  WHERE
-3.  GROUP BY
-4.  HAVING
-5.  SELECT
+| genre | quanti |
+| ----- | ------ |
+| Crime | 2      |
 
-## License
+</v-click>
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Mark Jordan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. 
-<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Gianluca Della Vedova</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. 
-Everything in the 'scripts' directory is in the <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain (CC0)</a>.
+---
+
+# Reading order
+
+```sql {all|2|3|4|5|1}
+SELECT genre, count(*) as quanti
+FROM Authors
+WHERE income >= 65000
+GROUP BY genre
+HAVING count(*) >= 2;
+```
+
+<v-clicks>
+
+1. `FROM`
+2. `WHERE`
+3. `GROUP BY`
+4. `HAVING`
+5. `SELECT`
+
+</v-clicks>
+
+---
+src: ./pages/license.md
+---

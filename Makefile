@@ -1,18 +1,21 @@
-MAKEFLAGS += -j$(shell nproc)
+# Slidev (https://sli.dev) decks: every 0X-*.md
+decks=$(basename $(wildcard 0*.md))
+SITE=_site
 
-all: pdf #html
+all: site
 
-mds=$(filter-out ARCHITECTURE.md,$(wildcard *.md))
+# Everything published on GitHub Pages: landing page + one static SPA per deck.
+# --base ./ and hash routing let the decks work under any subpath
+site: $(SITE)/index.html $(addprefix $(SITE)/,$(addsuffix /index.html,$(decks)))
 
-%.pdf : %.md
-	pandoc -t beamer --from markdown+grid_tables -V theme:metropolis --listings  -V aspectratio:169 -V themeoptions:titleformat=smallcaps --pdf-engine xelatex  $< -o $@
+$(SITE)/%/index.html: %.md pages/license.md styles/index.css
+	npx slidev build $< --base ./ --router-mode hash --out $(SITE)/$*
 
-%.html : %.md
-	pandoc -t revealjs --standalone --self-contained -V revealjs-url=./reveal.js -V theme=moon $< -o $@
+$(SITE)/index.html: site/index.html
+	mkdir -p $(SITE)
+	cp $< $@
 
+clean:
+	rm -rf $(SITE)
 
-pdfs=$(mds:.md=.pdf)
-
-# html: $(mds:.md=.html)
-
-pdf: $(pdfs)
+.PHONY: all site clean

@@ -1,16 +1,20 @@
 ---
- title: SQL on two tables
- classoption:
- - aspectratio=169
- header-includes:
- - \setsansfont{Open Sans}
- - \lstset{basicstyle=\ttfamily,breaklines=false}
- - \lstset{backgroundcolor=\color{black!10},frame=TRBL, frameround=tttt}
- -  \setmonofont{Noto Sans Mono}
- - \hypersetup{colorlinks=true}
+theme: nord
+title: SQL on two tables
+info: Introduction to Relational Databases — SQL on more tables
+author: Gianluca Della Vedova
+layout: cover
+class: text-center
+exportFilename: 03-sql-more-tables
 ---
 
-## Authors table
+# SQL on two tables
+
+Introduction to Relational Databases
+
+---
+
+# Authors table
 
 | id  | last_name     | first_name | DoB        | Income | Genre   |
 | --- | ------------- | ---------- | ---------- | ------ | ------- |
@@ -23,7 +27,9 @@
 | 7   | Berger        | Henry      | 15/08/1956 | 63000  | Romance |
 | 8   | Khatami       | Paree      | 11/10/1966 | 86000  | Sci-Fi  |
 
-## Books table
+---
+
+# Books table
 
 | id  | title                                            | ISBN          |
 | --- | ------------------------------------------------ | ------------- |
@@ -32,7 +38,9 @@
 | 3   | My life with relational databases: a memoir      | 3212345678909 |
 | 4   | Relational databases: an existential journey     | 8172635412345 |
 
-## BooksAuthors table
+---
+
+# BooksAuthors table
 
 | book_id | author_id |
 | ------- | --------- |
@@ -44,7 +52,9 @@
 | 1       | 5         |
 | 4       | 8         |
 
-## Editions table
+---
+
+# Editions table
 
 | edition_id | book_id | date_of_publication | edition_number |
 | ---------- | ------- | ------------------- | -------------- |
@@ -56,7 +66,14 @@
 | 8          | 2       | 2012                | 1              |
 | 9          | 3       | 2009                | 4              |
 
-## Foreign key
+---
+layout: two-cols-header
+layoutClass: gap-x-8
+---
+
+# Foreign key
+
+::left::
 
 | edition_id | book_id | date_of_publication | edition_number |
 | ---------- | ------- | ------------------- | -------------- |
@@ -67,24 +84,47 @@
 | 6          | 3       | 2005                | 3              |
 | 8          | 2       | 2012                | 1              |
 | 9          | 3       | 2009                | 4              |
+
+::right::
+
+<v-clicks>
 
 - Each edition is related to a book
 - `book_id` is a **foreign key** that refers to `books`
 - Each _non null_ values of `book_id` must be found in the `id` column of `books`
 
-## Enforcing a foreign key
+</v-clicks>
+
+---
+
+# Enforcing a foreign key
 
 What if a book is deleted or its `id` changed?
 
 We have 3 choices, decided when the constraint is created:
 
+<v-clicks>
+
 1.  delete/change also the edition (`CASCADE`)
 2.  abort the operation
 3.  set the `book_id` to NULL (`SET NULL`)
 
+</v-clicks>
+
+<v-click>
+
 All choices guarantee the integrity of the database
 
-## Find the foreign key
+</v-click>
+
+---
+layout: two-cols-header
+layoutClass: gap-x-8
+---
+
+# Find the foreign key
+
+::left::
 
 ### Books
 
@@ -92,6 +132,8 @@ All choices guarantee the integrity of the database
 | --- | ------------------------------------------------ | ------------- |
 | 1   | Creating relational databases for fun and profit | 7654321123456 |
 | 2   | Relational databases for really smart people     | 9876543212345 |
+
+::right::
 
 ### BooksAuthors
 
@@ -101,7 +143,9 @@ All choices guarantee the integrity of the database
 | 2       | 5         |
 | 1       | 1         |
 
-## Query
+---
+
+# Query
 
 This query asks for the first and last names of authors of the book with `id` 1:
 
@@ -113,7 +157,9 @@ The results are:
 | Jones         | Hannah     |
 | Turay         | Tandice    |
 
-## Query (where version)
+---
+
+# Query (where version)
 
 ```sql
 SELECT first_name, last_name
@@ -122,18 +168,26 @@ WHERE BooksAuthors.author_id = Authors.id
 AND book_id = 1;
 ```
 
-## Query (join version)
+---
 
-```sql
+# Query (join version)
+
+```sql {2-3}
 SELECT first_name, last_name
 FROM Authors JOIN BooksAuthors
      ON BooksAuthors.author_id = Authors.id
 WHERE book_id = 1;
 ```
 
+<v-click>
+
 The `JOIN` version is better when only 2 tables are involved
 
-## Query
+</v-click>
+
+---
+
+# Query
 
 To find the book IDs and ISBNs that have editions published after (that is, greater than) 2003.
 
@@ -150,7 +204,9 @@ WHERE Books.id = Editions.book_id
 AND Editions.date_of_publication > 2003;
 ```
 
-## Query results
+---
+
+# Query results
 
 | id  | title                                        | ISBN          |
 | --- | -------------------------------------------- | ------------- |
@@ -165,23 +221,31 @@ WHERE Books.id = Editions.book_id
 AND Editions.date_of_publication > 2003;
 ```
 
+<v-click>
+
 1.  Duplicate rows
 
-## Query results
+</v-click>
+
+---
+
+# Query results
 
 | id  | title                                        | ISBN          |
 | --- | -------------------------------------------- | ------------- |
 | 2   | Relational databases for really smart people | 9876543212345 |
 | 3   | My life with relational databases: a memoir  | 3212345678909 |
 
-```sql
+```sql {1}
 SELECT DISTINCT id, title, ISBN
 FROM Books, Editions
 WHERE Books.id = Editions.book_id
 AND Editions.date_of_publication > 2003;
 ```
 
-## Query
+---
+
+# Query
 
 Find who has written a book whose ISBN ends with `5`
 
@@ -198,12 +262,13 @@ FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id AND
       isbn LIKE "%5";
-
 ```
 
-## Query
+---
 
-```sql
+# Query
+
+```sql {all|3|1}
 SELECT Books.id, ISBN, Authors.id,
        last_name, first_name
 FROM Books, Authors, BooksAuthors
@@ -212,10 +277,21 @@ WHERE Books.id = BooksAuthors.book_id AND
       isbn LIKE "%5";
 ```
 
+<v-click at="1">
+
 1.  There are three tables involved
+
+</v-click>
+
+<v-click at="2">
+
 2.  `id` is a column name of two tables, use the table to disambiguate
 
-## Condition on more tables
+</v-click>
+
+---
+
+# Condition on more tables
 
 Find who has a last name with exactly 5 characters and has written a book whose ISBN ends with `5`
 
@@ -224,7 +300,7 @@ Find who has a last name with exactly 5 characters and has written a book whose 
 | 2   | 9876543212345 | 4   | Novak     | Stanislaw  |
 | 2   | 9876543212345 | 5   | Turay     | Tandice    |
 
-```sql
+```sql {5}
 SELECT Books.id, ISBN, Authors.id, last_name, first_name
 FROM Books, Authors, BooksAuthors
 WHERE Books.id = BooksAuthors.book_id AND
@@ -232,7 +308,23 @@ WHERE Books.id = BooksAuthors.book_id AND
       last_name LIKE '_____' AND isbn LIKE "%5";
 ```
 
-## Table aliases
+---
+
+# Table alias
+
+- Giving an alias to a table is like creating a copy
+- Example: find the coauthors of the author with id 5
+
+```sql
+SELECT T1.author_id
+FROM BooksAuthors T1, BooksAuthors T2
+WHERE T1.book_id = T2.book_id AND
+      T2.author_id = 5
+```
+
+---
+
+# Table aliases
 
 ```sql
 SELECT Books.id, ISBN, Authors.id, last_name, first_name
@@ -250,19 +342,37 @@ WHERE b.id = ba.book_id AND
       last_name LIKE '_____' AND isbn LIKE "%5";
 ```
 
-## Join Semantics
+---
 
-```sql
+# Join Semantics
+
+```sql {all|2|3|1}
 SELECT T1.A
 FROM T1, T2
 WHERE T1.B=T2.C;
 ```
 
+<v-click at="1">
+
 1.  Cross product between `T1` and `T2`
+
+</v-click>
+
+<v-click at="2">
+
 2.  Select only the rows satisfying the `WHERE` clause
+
+</v-click>
+
+<v-click at="3">
+
 3.  Projection on the `A` column
 
-## No corresponding row
+</v-click>
+
+---
+
+# No corresponding row
 
 For each author, list the ISBN of the books they have written
 
@@ -273,9 +383,15 @@ WHERE Books.id = BooksAuthors.book_id AND
       BooksAuthors.author_id = Authors.id;
 ```
 
+<v-click>
+
 But the author with `id` 2 has written no books
 
-## No corresponding row
+</v-click>
+
+---
+
+# No corresponding row
 
 | id  | ISBN          | id  | last_name     | first_name |
 | --- | ------------- | --- | ------------- | ---------- |
@@ -287,16 +403,20 @@ But the author with `id` 2 has written no books
 | 1   | 7654321123456 | 5   | Turay         | Tandice    |
 | 4   | 8172635412345 | 8   | Khatami       | Paree      |
 
-## Outer Join
+---
 
-```sql
+# Outer Join
+
+```sql {2-3}
 SELECT Authors.id, last_name, first_name, Books.id, ISBN
 FROM Books, Authors LEFT JOIN BooksAuthors
      ON Authors.id=BooksAuthors.author_id
 WHERE Books.id = BooksAuthors.book_id;
 ```
 
-## Outer Join
+---
+
+# Outer Join
 
 | id  | last_name     | first_name | id   | ISBN          |
 | --- | ------------- | ---------- | ---- | ------------- |
@@ -310,11 +430,13 @@ WHERE Books.id = BooksAuthors.book_id;
 | 2   | Jin-Soon      | Sin        | NULL | NULL          |
 | 7   | Berger        | Henry      | NULL | NULL          |
 
-## Counting
+---
+
+# Counting
 
 For each author, find the number of books they have written
 
-```sql
+```sql {all|1-2,6}
 SELECT Authors.id, last_name, first_name,
        count(*) as number
 FROM Books, Authors, BooksAuthors
@@ -323,28 +445,21 @@ WHERE Books.id = BooksAuthors.book_id AND
 GROUP BY Authors.id;
 ```
 
-## Counting
-
-For each author, find the number of books they have written
-
-```sql
-SELECT Authors.id, last_name, first_name,
-       count(*) as number
-FROM Books, Authors, BooksAuthors
-WHERE Books.id = BooksAuthors.book_id AND
-      BooksAuthors.author_id = Authors.id
-GROUP BY Authors.id;
-```
+<v-click at="1">
 
 **NO**
 
 The variables in the `SELECT` and in the `GROUP BY` clauses must be consistent
 
-## Counting
+</v-click>
+
+---
+
+# Counting
 
 For each author, find the number of books they have written
 
-```sql
+```sql {6}
 SELECT Authors.id, last_name, first_name,
        count(*) as number
 FROM Books, Authors, BooksAuthors
@@ -353,7 +468,9 @@ WHERE Books.id = BooksAuthors.book_id AND
 GROUP BY Authors.id, last_name, first_name;
 ```
 
-## Result
+---
+
+# Result
 
 | id  | last_name     | first_name | number |
 | --- | ------------- | ---------- | ------ |
@@ -364,11 +481,13 @@ GROUP BY Authors.id, last_name, first_name;
 | 3   | Jones         | Hannah     | 1      |
 | 8   | Khatami       | Paree      | 1      |
 
-## Counting
+---
+
+# Counting
 
 For each author, find the number of books they have written
 
-```sql
+```sql {2-4}
 SELECT Authors.id, last_name, first_name,
        count(Books.id) as number
 FROM Books, Authors LEFT JOIN BooksAuthors
@@ -377,9 +496,15 @@ WHERE Books.id = BooksAuthors.book_id
 GROUP BY Authors.id, last_name, first_name;
 ```
 
+<v-click>
+
 `count(Books.id)` counts the number of tuples where `Books.id` is not NULL
 
-## Result
+</v-click>
+
+---
+
+# Result
 
 | id  | last_name     | first_name | number |
 | --- | ------------- | ---------- | ------ |
@@ -392,28 +517,34 @@ GROUP BY Authors.id, last_name, first_name;
 | 2   | Jin-Soon      | Sin        | 0      |
 | 7   | Berger        | Henry      | 0      |
 
-## NULL values
+---
+
+# NULL values
 
 Find the authors that have written no book
 
-```sql
-SELECT Authors.id, last_name, first_name,
+```sql {4}
+SELECT Authors.id, last_name, first_name
 FROM Authors LEFT JOIN BooksAuthors
      ON Authors.id=BooksAuthors.author_id
 WHERE BooksAuthors.book_id IS NULL;
 ```
 
+<v-click>
+
 Comparisons with NULL values require `IS NULL` or `IS NOT NULL`
 
-## Result
+</v-click>
+
+---
+
+# Result
 
 | id  | last_name | first_name | number |
 | --- | --------- | ---------- | ------ |
 | 2   | Jin-Soon  | Sin        | 0      |
 | 7   | Berger    | Henry      | 0      |
 
-## License
-
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Mark Jordan</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Except where noted, text and images for Introduction to Relational Databases</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Gianluca Della Vedova</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-Everything in the 'scripts' directory is in the <a href="https://creativecommons.org/publicdomain/zero/1.0/">public domain (CC0)</a>.
+---
+src: ./pages/license.md
+---
