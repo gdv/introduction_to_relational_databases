@@ -7,7 +7,7 @@
     "build": "make site"
   },
   "dependencies": {
-    "@slidev/cli": "latest",
-    "slidev-theme-nord": "latest"
+    "@slidev/cli": "^53.0.0",
+    "slidev-theme-nord": "^0.0.6"
   }
 }
